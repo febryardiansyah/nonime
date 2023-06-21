@@ -66,6 +66,13 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="8dp">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:id="@+id/homeGenresLoading"
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/homeGenresRV"
@@ -102,7 +109,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lihat lainnya"
+                android:background="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:textColor="@color/red"
+                android:clickable="true"
+                android:focusable="true"
                 android:textSize="8dp" />
         </LinearLayout>
 

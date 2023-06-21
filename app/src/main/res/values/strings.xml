@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Nonime</string>
-    <string name="sm">8dp</string>
+    <string name="loading_message">Loading..</string>
+
 </resources>

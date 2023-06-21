@@ -3,14 +3,14 @@ package id.nonime.app.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import id.nonime.app.R
+import id.nonime.app.models.GenreListModel
 import id.nonime.app.models.GenreModel
 
-class HomeGenresAdapter(private val genres: List<GenreModel>) :
+class HomeGenresAdapter(private val genres: List<GenreModel?>) :
     RecyclerView.Adapter<HomeGenresAdapter.ViewHolder>() {
     private var listener: ((GenreModel) -> Unit)? = null
 
@@ -35,8 +35,8 @@ class HomeGenresAdapter(private val genres: List<GenreModel>) :
 
     override fun onBindViewHolder(holder: HomeGenresAdapter.ViewHolder, position: Int) {
         val item = genres[position]
-        holder.title.text = item.genreName
-        holder.bind(item)
+        holder.title.text = item?.genreName
+        holder.bind(item!!)
     }
 
     override fun getItemCount(): Int = genres.size

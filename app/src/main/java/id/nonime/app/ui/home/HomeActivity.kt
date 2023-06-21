@@ -2,12 +2,11 @@ package id.nonime.app.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.Button
+import android.view.View
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import id.nonime.app.R
 import id.nonime.app.adapter.HomeCompleteAdapter
 import id.nonime.app.adapter.HomeGenresAdapter
@@ -15,31 +14,24 @@ import id.nonime.app.adapter.HomeOngoingAdapter
 import id.nonime.app.fragments.GenresBottomSheetFragment
 import id.nonime.app.models.GenreModel
 import id.nonime.app.models.OnGoingAnimeModel
+import id.nonime.app.view_model.GenreListViewModel
 
 class HomeActivity : AppCompatActivity() {
+    private lateinit var genresViewModel: GenreListViewModel
+    private lateinit var genresRV: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         supportActionBar?.hide()
-
         /**
          * genres
          */
-        val genreMore = GenreModel("Lainnya", "lainnya")
-        val convertedGenres: MutableList<GenreModel> = dummyGenres.subList(0, 8).toMutableList()
-        convertedGenres[convertedGenres.size - 1] = genreMore
-
-        val genresRV: RecyclerView = findViewById(R.id.homeGenresRV)
-        genresRV.layoutManager = GridLayoutManager(this, 4)
-        val genresAdapter = HomeGenresAdapter(convertedGenres)
-        genresAdapter.setOnItemClickListener {
-            if (it.id == "lainnya") {
-                val bottomSheet = GenresBottomSheetFragment(windowManager)
-                bottomSheet.show(supportFragmentManager, "genre_bottom_sheet")
-            }
-        }
-        genresRV.adapter = genresAdapter
+        genresRV = findViewById(R.id.homeGenresRV)
+        genresRV.isNestedScrollingEnabled = false
+        genresViewModel = GenreListViewModel()
+        genresViewModel.getGenresData()
+        subscribeGenres()
 
         /**
          * ongoing
@@ -56,6 +48,39 @@ class HomeActivity : AppCompatActivity() {
         completeRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val completeAdapter = HomeCompleteAdapter(dummyOngoing)
         completeRV.adapter = completeAdapter
+    }
+
+    private fun subscribeGenres() {
+        val progress = findViewById<ProgressBar>(R.id.homeGenresLoading)
+        genresViewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                progress.visibility = View.VISIBLE
+                genresRV.visibility = View.GONE
+            }
+        }
+        genresViewModel.isError.observe(this) { isError ->
+            if (isError) {
+                progress.visibility = View.GONE
+                genresRV.visibility = View.GONE
+            }
+        }
+        genresViewModel.genreData.observe(this) { data ->
+            progress.visibility = View.GONE
+            genresRV.visibility = View.VISIBLE
+            val convertedGenres: MutableList<GenreModel?> =
+                data.genreList!!.subList(0, 8).toMutableList()
+            convertedGenres[convertedGenres.size - 1] = GenreModel("Lainnya", "lainnya")
+
+            genresRV.layoutManager = GridLayoutManager(this, 4)
+            val genresAdapter = HomeGenresAdapter(convertedGenres)
+            genresAdapter.setOnItemClickListener {
+                if (it.id == "lainnya") {
+                    val bottomSheet = GenresBottomSheetFragment(windowManager)
+                    bottomSheet.show(supportFragmentManager, "genre_bottom_sheet")
+                }
+            }
+            genresRV.adapter = genresAdapter
+        }
     }
 }
 
