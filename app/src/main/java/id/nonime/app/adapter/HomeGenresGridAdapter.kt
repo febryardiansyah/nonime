@@ -1,0 +1,59 @@
+package id.nonime.app.adapter
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import id.nonime.app.R
+import id.nonime.app.models.GenreModel
+
+class HomeGenresAdapter(private val genres: List<GenreModel>) :
+    RecyclerView.Adapter<HomeGenresAdapter.ViewHolder>() {
+    private var listener: ((GenreModel) -> Unit)? = null
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        //                init {
+//                    itemView.setOnClickListener(this)
+//                }
+        val title: TextView = itemView.findViewById(R.id.genreTittleTV)
+        fun bind(item: GenreModel) {
+            itemView.setOnClickListener {
+                listener?.invoke(item)
+            }
+        }
+//        override fun onClick(v: View) {
+//            if (title.text == "Lainnya") {
+//                val dialog = BottomSheetDialog(itemView.context, R.style.rounded_bottom_sheet_theme)
+//                val bottomView = LayoutInflater.from(itemView.context)
+//                    .inflate(R.layout.genre_bottom_sheet, null, false)
+//                dialog.setContentView(bottomView)
+//                dialog.show()
+//            }
+//        }
+    }
+
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): HomeGenresAdapter.ViewHolder {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.genre_gridview_item, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: HomeGenresAdapter.ViewHolder, position: Int) {
+        val item = genres[position]
+        holder.title.text = item.genreName
+        holder.bind(item)
+    }
+
+    override fun getItemCount(): Int = genres.size
+
+    fun setOnItemClickListener(listener: (GenreModel) -> Unit) {
+        this.listener = listener
+    }
+}
