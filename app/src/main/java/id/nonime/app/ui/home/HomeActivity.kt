@@ -37,11 +37,6 @@ class HomeActivity : AppCompatActivity() {
             if (it.id == "lainnya") {
                 val bottomSheet = GenresBottomSheetFragment(windowManager)
                 bottomSheet.show(supportFragmentManager, "genre_bottom_sheet")
-//                val dialog = BottomSheetDialog(this, R.style.rounded_bottom_sheet_theme)
-//                val bottomView = LayoutInflater.from(this)
-//                    .inflate(R.layout.genre_bottom_sheet, null, false)
-//                dialog.setContentView(bottomView)
-//                dialog.show()
             }
         }
         genresRV.adapter = genresAdapter

@@ -15,24 +15,12 @@ class HomeGenresAdapter(private val genres: List<GenreModel>) :
     private var listener: ((GenreModel) -> Unit)? = null
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //                init {
-//                    itemView.setOnClickListener(this)
-//                }
         val title: TextView = itemView.findViewById(R.id.genreTittleTV)
         fun bind(item: GenreModel) {
             itemView.setOnClickListener {
                 listener?.invoke(item)
             }
         }
-//        override fun onClick(v: View) {
-//            if (title.text == "Lainnya") {
-//                val dialog = BottomSheetDialog(itemView.context, R.style.rounded_bottom_sheet_theme)
-//                val bottomView = LayoutInflater.from(itemView.context)
-//                    .inflate(R.layout.genre_bottom_sheet, null, false)
-//                dialog.setContentView(bottomView)
-//                dialog.show()
-//            }
-//        }
     }
 
 

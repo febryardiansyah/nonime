@@ -2,6 +2,7 @@ package id.nonime.app.fragments
 
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,11 @@ class GenresBottomSheetFragment(val windowManager: WindowManager) : BottomSheetD
         super.onViewCreated(view, savedInstanceState)
         val genresRV: RecyclerView = view.findViewById(R.id.genreBottomSheetRV)
         genresRV.layoutManager = GridLayoutManager(view.context, 4)
-        genresRV.adapter = HomeGenresAdapter(dummyGenres)
+        val genresAdapter = HomeGenresAdapter(dummyGenres)
+        genresAdapter.setOnItemClickListener {
+            Log.d("CLICKED","CLick")
+        }
+        genresRV.adapter = genresAdapter
 
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
