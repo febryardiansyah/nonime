@@ -75,7 +75,7 @@ class HomeActivity : AppCompatActivity() {
             val genresAdapter = HomeGenresAdapter(convertedGenres)
             genresAdapter.setOnItemClickListener {
                 if (it.id == "lainnya") {
-                    val bottomSheet = GenresBottomSheetFragment(windowManager)
+                    val bottomSheet = GenresBottomSheetFragment(windowManager,data.genreList)
                     bottomSheet.show(supportFragmentManager, "genre_bottom_sheet")
                 }
             }

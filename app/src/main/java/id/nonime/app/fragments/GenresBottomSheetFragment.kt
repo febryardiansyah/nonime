@@ -13,9 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import id.nonime.app.R
 import id.nonime.app.adapter.HomeGenresAdapter
+import id.nonime.app.models.GenreModel
 import id.nonime.app.ui.home.dummyGenres
 
-class GenresBottomSheetFragment(val windowManager: WindowManager) : BottomSheetDialogFragment() {
+class GenresBottomSheetFragment(
+    private val windowManager: WindowManager,
+    private val genres: List<GenreModel?>
+) : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,10 +31,11 @@ class GenresBottomSheetFragment(val windowManager: WindowManager) : BottomSheetD
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val genresRV: RecyclerView = view.findViewById(R.id.genreBottomSheetRV)
-        genresRV.layoutManager = GridLayoutManager(view.context, 4)
-        val genresAdapter = HomeGenresAdapter(dummyGenres)
+        val layoutManager = GridLayoutManager(view.context, 4)
+        genresRV.layoutManager = layoutManager
+        val genresAdapter = HomeGenresAdapter(genres)
         genresAdapter.setOnItemClickListener {
-            Log.d("CLICKED","CLick")
+            Log.d("CLICKED", "CLick")
         }
         genresRV.adapter = genresAdapter
 

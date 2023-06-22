@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:padding="8dp"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -10,10 +11,13 @@
         android:orientation="vertical"
         android:gravity="center"
         android:layout_height="wrap_content">
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/genreIV"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/logo"
+            app:shapeAppearanceOverlay="@style/rounded_border"
             />
         <TextView
             android:paddingTop="8dp"
