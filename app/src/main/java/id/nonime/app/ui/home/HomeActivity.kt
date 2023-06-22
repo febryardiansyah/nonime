@@ -4,21 +4,27 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import id.nonime.app.R
 import id.nonime.app.adapter.HomeCompleteAdapter
 import id.nonime.app.adapter.HomeGenresAdapter
 import id.nonime.app.adapter.HomeOngoingAdapter
 import id.nonime.app.fragments.GenresBottomSheetFragment
+import id.nonime.app.models.AnimeItemModel
 import id.nonime.app.models.GenreModel
+import id.nonime.app.models.HomeModel
 import id.nonime.app.models.OnGoingAnimeModel
 import id.nonime.app.view_model.GenreListViewModel
+import id.nonime.app.view_model.HomeViewModel
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var genresViewModel: GenreListViewModel
     private lateinit var genresRV: RecyclerView
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,24 +36,30 @@ class HomeActivity : AppCompatActivity() {
         genresRV = findViewById(R.id.homeGenresRV)
         genresRV.isNestedScrollingEnabled = false
         genresViewModel = GenreListViewModel()
-        genresViewModel.getGenresData()
+        fetchGenres()
+
+        /**
+         * home
+         */
+        homeViewModel = HomeViewModel()
+        fetchHome()
+
+        val swipe: SwipeRefreshLayout = findViewById(R.id.homeSwipe)
+        swipe.setOnRefreshListener {
+            fetchGenres()
+            fetchHome()
+            swipe.isRefreshing = false
+        }
+    }
+
+    private fun fetchGenres() {
+        genresViewModel.fetchGenresData()
         subscribeGenres()
+    }
 
-        /**
-         * ongoing
-         */
-        val ongoingRV: RecyclerView = findViewById(R.id.homeOngoingRV)
-        ongoingRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        val ongoingAdapter = HomeOngoingAdapter(dummyOngoing)
-        ongoingRV.adapter = ongoingAdapter
-
-        /**
-         * complete
-         */
-        val completeRV: RecyclerView = findViewById(R.id.homeCompleteRV)
-        completeRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        val completeAdapter = HomeCompleteAdapter(dummyOngoing)
-        completeRV.adapter = completeAdapter
+    private fun fetchHome() {
+        homeViewModel.fetchHome()
+        subscribeHome()
     }
 
     private fun subscribeGenres() {
@@ -75,11 +87,53 @@ class HomeActivity : AppCompatActivity() {
             val genresAdapter = HomeGenresAdapter(convertedGenres)
             genresAdapter.setOnItemClickListener {
                 if (it.id == "lainnya") {
-                    val bottomSheet = GenresBottomSheetFragment(windowManager,data.genreList)
+                    val bottomSheet = GenresBottomSheetFragment(windowManager, data.genreList)
                     bottomSheet.show(supportFragmentManager, "genre_bottom_sheet")
                 }
             }
             genresRV.adapter = genresAdapter
+        }
+    }
+
+    private fun subscribeHome() {
+        val ongoingRV: RecyclerView = findViewById(R.id.homeOngoingRV)
+        val ongoingProgressBar: ProgressBar = findViewById(R.id.homeOngoingLoading)
+        val completeRV: RecyclerView = findViewById(R.id.homeCompleteRV)
+        val completeProgressBar: ProgressBar = findViewById(R.id.homeCompleteLoading)
+
+        homeViewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                ongoingProgressBar.visibility = View.VISIBLE
+                ongoingRV.visibility = View.GONE
+                completeProgressBar.visibility = View.VISIBLE
+                completeRV.visibility = View.GONE
+            }
+        }
+        homeViewModel.isError.observe(this) { isError ->
+            if (isError) {
+                Toast.makeText(this, homeViewModel.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+        homeViewModel.data.observe(this) { data ->
+            /**
+             * ongoing
+             */
+            ongoingProgressBar.visibility = View.GONE
+            ongoingRV.visibility = View.VISIBLE
+            ongoingRV.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            val ongoingAdapter = HomeOngoingAdapter(data.data?.onGoing!!.filterNotNull())
+            ongoingRV.adapter = ongoingAdapter
+
+            /**
+             * complete
+             */
+            completeProgressBar.visibility = View.GONE
+            completeRV.visibility = View.VISIBLE
+            completeRV.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            val completeAdapter = HomeCompleteAdapter(data.data.complete!!.filterNotNull())
+            completeRV.adapter = completeAdapter
         }
     }
 }

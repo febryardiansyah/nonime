@@ -19,9 +19,8 @@ class GenreListViewModel : ViewModel() {
     private val _isError = MutableLiveData<Boolean>()
     val isError: LiveData<Boolean> get() = _isError
     var errorMessage: String = ""
-        private set
 
-    fun getGenresData() {
+    fun fetchGenresData() {
         _isLoading.value = true
         _isError.value = false
 
@@ -32,12 +31,14 @@ class GenreListViewModel : ViewModel() {
                 call: Call<GenreListModel>,
                 response: Response<GenreListModel>
             ) {
+                _isLoading.value = false
                 val responseBody = response.body()
                 if (!response.isSuccessful || responseBody == null) {
+                    _isError.value = true
                     onError("Data processing error")
+                    errorMessage = "Data processing error"
                     return
                 }
-                _isLoading.value = false
                 _genreData.postValue(responseBody)
             }
 

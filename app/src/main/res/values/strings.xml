@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Nonime</string>
     <string name="loading_message">Loading..</string>
+    <string name="data_processing_error">Data processing error</string>
 
 </resources>

@@ -16,10 +16,25 @@
             android:layout_height="match_parent"
             android:src="@drawable/logo"
             android:id="@+id/itemCardAnimeThumb"
+            android:scaleType="centerCrop"
             />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:background="@drawable/rounded_red_rectangle">
+            <TextView
+                android:id="@+id/itemCardAnimeEpisode"
+                android:layout_width="wrap_content"
+                android:text="Placeholder"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:background="@drawable/black_rectangle"
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@id/itemCardAnimeThumb"
@@ -31,15 +46,15 @@
             android:id="@+id/itemCardAnimeTitle"
             android:layout_alignParentBottom="true"
             android:textSize="16sp"
-            android:height="30dp"
             android:text="PlaceHolder"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:ellipsize="middle"
-            android:maxLines="2"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:layout_alignStart="@id/itemCardAnimeThumb"
             android:layout_alignEnd="@id/itemCardAnimeThumb"
+            android:layout_margin="8dp"
             />
     </RelativeLayout>
 

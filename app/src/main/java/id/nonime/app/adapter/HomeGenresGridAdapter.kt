@@ -39,6 +39,8 @@ class HomeGenresAdapter(private val genres: List<GenreModel?>) :
         holder.title.text = item?.genreName
         if (item?.id == "lainnya") {
             holder.img.scaleType = ImageView.ScaleType.CENTER
+            holder.img.layoutParams.width = 100
+            holder.img.layoutParams.height = 100
             holder.img.setImageResource(R.drawable.ic_grid_view)
         } else {
             holder.img.load(item?.imageLink){
