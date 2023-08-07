@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import id.nonime.app.R
+import id.nonime.app.models.GenreListItem
 import id.nonime.app.models.GenreModel
 
-class DetailAnimeGenreAdapter(private val genres: List<GenreModel>) :
+class DetailAnimeGenreAdapter(private val genres: List<GenreListItem>) :
     RecyclerView.Adapter<DetailAnimeGenreAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

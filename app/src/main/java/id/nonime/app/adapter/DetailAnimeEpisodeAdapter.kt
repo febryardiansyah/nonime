@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import id.nonime.app.R
-import id.nonime.app.models.EpisodeModel
+import id.nonime.app.models.EpisodeListItem
 
-class DetailAnimeEpisodeAdapter(private val episodes: List<EpisodeModel>) :
+class DetailAnimeEpisodeAdapter(private val episodes: List<EpisodeListItem>) :
     RecyclerView.Adapter<DetailAnimeEpisodeAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

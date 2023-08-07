@@ -1,18 +1,19 @@
 package id.nonime.app.view_model
 
+import androidx.appcompat.widget.ThemedSpinnerAdapter.Helper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import id.nonime.app.models.HomeModel
+import id.nonime.app.models.DetailAnimeModel
 import id.nonime.app.networking.ApiConfig
 import id.nonime.app.utils.Helpers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel : ViewModel() {
-    private val _data = MutableLiveData<HomeModel>()
-    val data: LiveData<HomeModel> get() = _data
+class DetailAnimeViewModel(private val id: String) : ViewModel() {
+    private val _data = MutableLiveData<DetailAnimeModel>()
+    val data: LiveData<DetailAnimeModel> get() = _data
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
@@ -21,15 +22,23 @@ class HomeViewModel : ViewModel() {
     val isError: LiveData<Boolean> get() = _isError
     var errorMessage: String = ""
 
-    fun fetchHome() {
+    init {
         _isLoading.value = true
         _isError.value = false
+        fetchDetail(id)
+    }
 
-        val client = ApiConfig.getApiService().getHome()
+    private fun fetchDetail(id: String) {
 
-        client.enqueue(object : Callback<HomeModel> {
-            override fun onResponse(call: Call<HomeModel>, response: Response<HomeModel>) {
+        val client = ApiConfig.getApiService().getDetail(id)
+
+        client.enqueue(object : Callback<DetailAnimeModel> {
+            override fun onResponse(
+                call: Call<DetailAnimeModel>,
+                response: Response<DetailAnimeModel>
+            ) {
                 _isLoading.value = false
+
                 val responseBody = response.body()
                 if (!response.isSuccessful || responseBody == null) {
                     _isError.value = true
@@ -39,10 +48,11 @@ class HomeViewModel : ViewModel() {
                 _data.postValue(responseBody)
             }
 
-            override fun onFailure(call: Call<HomeModel>, t: Throwable) {
-                t.message?.let { errorMessage = Helpers.onError(it, t) }
+            override fun onFailure(call: Call<DetailAnimeModel>, t: Throwable) {
+                _isLoading.value = false
+                _isError.value = true
+                t.message?.let { msg -> errorMessage = Helpers.onError(msg) }
             }
-
         })
     }
 }

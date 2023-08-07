@@ -1,5 +1,6 @@
 package id.nonime.app.ui.home
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -18,6 +19,7 @@ import id.nonime.app.models.AnimeItemModel
 import id.nonime.app.models.GenreModel
 import id.nonime.app.models.HomeModel
 import id.nonime.app.models.OnGoingAnimeModel
+import id.nonime.app.ui.detail.DetailAnime
 import id.nonime.app.view_model.GenreListViewModel
 import id.nonime.app.view_model.HomeViewModel
 

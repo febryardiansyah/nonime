@@ -9,3 +9,7 @@ object Helpers {
             .toString()
     }
 }
+
+class MyOnClickListener<T>(val clickListener: (data: T) -> Unit) {
+    fun onClick(data: T) = clickListener(data)
+}

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import id.nonime.app.R
@@ -15,18 +16,20 @@ import id.nonime.app.ui.detail.DetailAnime
 
 class HomeOngoingAdapter(private val animeList: List<AnimeItemModel>) :
     RecyclerView.Adapter<HomeOngoingAdapter.ViewHolder>() {
+    private var listener: ((AnimeItemModel) -> Unit)? = null
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        init {
-            itemView.setOnClickListener(this)
-        }
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val title: TextView = itemView.findViewById(R.id.itemCardAnimeTitle)
         val img: ImageView = itemView.findViewById(R.id.itemCardAnimeThumb)
         val episode: TextView = itemView.findViewById(R.id.itemCardAnimeEpisode)
-        override fun onClick(v: View) {
-            val intent = Intent(v.context, DetailAnime::class.java)
-            v.context.startActivity(intent)
+        fun bind(item: AnimeItemModel) {
+            itemView.setOnClickListener {
+                listener?.invoke(item)
+                val intent = Intent(itemView.context, DetailAnime::class.java)
+                intent.putExtra("id", item.id)
+                itemView.context.startActivity(intent)
+            }
         }
 
     }
@@ -45,12 +48,17 @@ class HomeOngoingAdapter(private val animeList: List<AnimeItemModel>) :
         val itemViewModel = animeList[position]
         holder.title.text = itemViewModel.title
         holder.episode.text = itemViewModel.episode
-        holder.img.load(itemViewModel.thumb){
+        holder.img.load(itemViewModel.thumb) {
             placeholder(R.drawable.logo)
         }
+        holder.bind(itemViewModel)
     }
 
     override fun getItemCount(): Int {
         return animeList.size
+    }
+
+    fun setOnItemClickListener(listener: (AnimeItemModel) -> Unit) {
+        this.listener = listener
     }
 }
