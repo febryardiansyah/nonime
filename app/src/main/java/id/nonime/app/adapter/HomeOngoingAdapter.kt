@@ -16,21 +16,11 @@ import id.nonime.app.ui.detail.DetailAnime
 
 class HomeOngoingAdapter(private val animeList: List<AnimeItemModel>) :
     RecyclerView.Adapter<HomeOngoingAdapter.ViewHolder>() {
-    private var listener: ((AnimeItemModel) -> Unit)? = null
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         val title: TextView = itemView.findViewById(R.id.itemCardAnimeTitle)
         val img: ImageView = itemView.findViewById(R.id.itemCardAnimeThumb)
         val episode: TextView = itemView.findViewById(R.id.itemCardAnimeEpisode)
-        fun bind(item: AnimeItemModel) {
-            itemView.setOnClickListener {
-                listener?.invoke(item)
-                val intent = Intent(itemView.context, DetailAnime::class.java)
-                intent.putExtra("id", item.id)
-                itemView.context.startActivity(intent)
-            }
-        }
 
     }
 
@@ -51,7 +41,12 @@ class HomeOngoingAdapter(private val animeList: List<AnimeItemModel>) :
         holder.img.load(itemViewModel.thumb) {
             placeholder(R.drawable.logo)
         }
-        holder.bind(itemViewModel)
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, DetailAnime::class.java)
+            intent.putExtra("id", itemViewModel.id)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

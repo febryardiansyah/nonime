@@ -20,15 +20,6 @@ class HomeCompleteAdapter(private val animeList: List<AnimeItemModel>) :
         val title: TextView = itemView.findViewById(R.id.itemCardAnimeTitle)
         val img: ImageView = itemView.findViewById(R.id.itemCardAnimeThumb)
         val episode: TextView = itemView.findViewById(R.id.itemCardAnimeEpisode)
-
-        fun bind(item: AnimeItemModel) {
-            itemView.setOnClickListener {
-                listener?.invoke(item)
-                val intent = Intent(itemView.context, DetailAnime::class.java)
-                intent.putExtra("id", item.id)
-                itemView.context.startActivity(intent)
-            }
-        }
     }
 
     override fun onCreateViewHolder(
@@ -47,7 +38,11 @@ class HomeCompleteAdapter(private val animeList: List<AnimeItemModel>) :
             placeholder(R.drawable.logo)
         }
         holder.episode.text = itemViewModel.episode
-        holder.bind(itemViewModel)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, DetailAnime::class.java)
+            intent.putExtra("id", itemViewModel.id)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
