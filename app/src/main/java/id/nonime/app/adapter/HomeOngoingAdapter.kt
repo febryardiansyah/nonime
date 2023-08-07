@@ -57,8 +57,4 @@ class HomeOngoingAdapter(private val animeList: List<AnimeItemModel>) :
     override fun getItemCount(): Int {
         return animeList.size
     }
-
-    fun setOnItemClickListener(listener: (AnimeItemModel) -> Unit) {
-        this.listener = listener
-    }
 }

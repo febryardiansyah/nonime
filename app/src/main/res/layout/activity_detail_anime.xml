@@ -54,10 +54,11 @@
             <ImageButton
                 android:id="@+id/detailAnimeBackBtn"
                 android:layout_margin="8dp"
-                android:background="@color/transparent"
+                android:background="@drawable/rounded_red_rectangle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/baseline_arrow_back_24" />
+                android:src="@drawable/baseline_arrow_back_24"
+                app:tint="@color/white" />
 
         </FrameLayout>
 

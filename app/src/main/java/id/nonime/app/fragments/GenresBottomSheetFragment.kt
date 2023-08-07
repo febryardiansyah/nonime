@@ -14,7 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import id.nonime.app.R
 import id.nonime.app.adapter.HomeGenresAdapter
 import id.nonime.app.models.GenreModel
-import id.nonime.app.ui.home.dummyGenres
 
 class GenresBottomSheetFragment(
     private val windowManager: WindowManager,
