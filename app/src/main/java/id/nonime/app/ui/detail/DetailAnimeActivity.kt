@@ -15,7 +15,7 @@ import id.nonime.app.models.EpisodeModel
 import id.nonime.app.models.GenreModel
 import id.nonime.app.view_model.DetailAnimeViewModel
 
-class DetailAnime : AppCompatActivity() {
+class DetailAnimeActivity : AppCompatActivity() {
     private lateinit var detailViewModel: DetailAnimeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

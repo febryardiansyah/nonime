@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailAnimeViewModel(private val id: String) : ViewModel() {
+class DetailAnimeViewModel(id: String) : ViewModel() {
     private val _data = MutableLiveData<DetailAnimeModel>()
     val data: LiveData<DetailAnimeModel> get() = _data
 

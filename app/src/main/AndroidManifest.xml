@@ -19,7 +19,7 @@
             android:name=".ui.list.SearchResultActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.detail.DetailAnime"
+            android:name=".ui.detail.DetailAnimeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.home.HomeActivity"

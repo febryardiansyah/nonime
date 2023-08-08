@@ -31,5 +31,14 @@ data class AnimeItemModel(
     val id: String? = null,
 
     @field:SerializedName("title")
-    val title: String? = null
+    val title: String? = null,
+
+    @field:SerializedName("score")
+    val score: Double? = null,
+
+    @field:SerializedName("status")
+    val status: String? = null,
+
+    @field:SerializedName("genre_list")
+    val genreList:List<GenreModel>? = null
 )

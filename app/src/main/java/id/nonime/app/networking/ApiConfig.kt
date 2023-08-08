@@ -14,7 +14,7 @@ class ApiConfig {
             val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://v3.nimeflix.kaedenoki.net/api/")
+                .baseUrl("https://nimeflix.kaedenoki.net/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

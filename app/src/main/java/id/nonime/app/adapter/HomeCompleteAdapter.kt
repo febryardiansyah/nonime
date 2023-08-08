@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import id.nonime.app.R
 import id.nonime.app.models.AnimeItemModel
-import id.nonime.app.ui.detail.DetailAnime
+import id.nonime.app.ui.detail.DetailAnimeActivity
 
 class HomeCompleteAdapter(private val animeList: List<AnimeItemModel>) :
     RecyclerView.Adapter<HomeCompleteAdapter.ViewHolder>() {
@@ -39,7 +39,7 @@ class HomeCompleteAdapter(private val animeList: List<AnimeItemModel>) :
         }
         holder.episode.text = itemViewModel.episode
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, DetailAnime::class.java)
+            val intent = Intent(holder.itemView.context, DetailAnimeActivity::class.java)
             intent.putExtra("id", itemViewModel.id)
             holder.itemView.context.startActivity(intent)
         }

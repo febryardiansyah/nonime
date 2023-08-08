@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import id.nonime.app.R
 import id.nonime.app.models.AnimeItemModel
-import id.nonime.app.models.OnGoingAnimeModel
-import id.nonime.app.ui.detail.DetailAnime
+import id.nonime.app.ui.detail.DetailAnimeActivity
 
 class HomeOngoingAdapter(private val animeList: List<AnimeItemModel>) :
     RecyclerView.Adapter<HomeOngoingAdapter.ViewHolder>() {
@@ -43,7 +41,7 @@ class HomeOngoingAdapter(private val animeList: List<AnimeItemModel>) :
         }
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, DetailAnime::class.java)
+            val intent = Intent(holder.itemView.context, DetailAnimeActivity::class.java)
             intent.putExtra("id", itemViewModel.id)
             holder.itemView.context.startActivity(intent)
         }

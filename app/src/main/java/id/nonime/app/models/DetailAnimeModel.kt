@@ -8,7 +8,7 @@ data class DetailAnimeModel(
 	val studio: String? = null,
 
 	@field:SerializedName("genre_list")
-	val genreList: List<GenreListItem?>? = null,
+	val genreList: List<GenreModel?>? = null,
 
 	@field:SerializedName("thumb")
 	val thumb: String? = null,
@@ -51,18 +51,6 @@ data class DetailAnimeModel(
 
 	@field:SerializedName("status")
 	val status: String? = null
-)
-
-data class GenreListItem(
-
-	@field:SerializedName("genre_name")
-	val genreName: String? = null,
-
-	@field:SerializedName("genre_link")
-	val genreLink: String? = null,
-
-	@field:SerializedName("genre_id")
-	val genreId: String? = null
 )
 
 data class EpisodeListItem(

@@ -8,7 +8,7 @@ data class GenreListModel(
 )
 
 data class GenreModel(
-    @field:SerializedName("genre_name")
+    @field:SerializedName("title")
     val genreName: String? = null,
 
     @field:SerializedName("id")
@@ -17,6 +17,6 @@ data class GenreModel(
     @field:SerializedName("link")
     val link: String? = null,
 
-    @field:SerializedName("image_link")
+    @field:SerializedName("img")
     val imageLink: String? = null
 )
