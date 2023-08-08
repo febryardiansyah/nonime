@@ -57,34 +57,14 @@ class DetailAnime : AppCompatActivity() {
             val genresRv: RecyclerView = findViewById(R.id.detailAnimeGenreRV)
             val genresLayoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-            genresRv.layoutManager = genresLayoutManager
             genresRv.adapter = DetailAnimeGenreAdapter(it.genreList!!.filterNotNull())
+            genresRv.layoutManager = genresLayoutManager
 
             synopsis.text = it.synopsis.takeUnless { text -> text!!.isEmpty() } ?: "-"
 
             val episodeRv: RecyclerView = findViewById(R.id.detailAnimeEpisodesRV)
-            episodeRv.layoutManager = LinearLayoutManager(this)
             episodeRv.adapter = DetailAnimeEpisodeAdapter(it.episodeList!!.filterNotNull())
+            episodeRv.layoutManager = LinearLayoutManager(this)
         }
     }
 }
-
-private val dummyGenres: List<GenreModel> = listOf(
-    GenreModel("Action", "action"),
-    GenreModel("Action", "action"),
-    GenreModel("Action", "action"),
-    GenreModel("Action", "action"),
-    GenreModel("Action", "action"),
-    GenreModel("Action", "action"),
-    GenreModel("Action", "action"),
-    GenreModel("Action", "action"),
-)
-
-private val dummyEpisodes: List<EpisodeModel> = listOf(
-    EpisodeModel("Episode 1", "1"),
-    EpisodeModel("Episode 2", "1"),
-    EpisodeModel("Episode 3", "1"),
-    EpisodeModel("Episode 4", "1"),
-    EpisodeModel("Episode 5", "1"),
-    EpisodeModel("Episode 6", "1"),
-)
