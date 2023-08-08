@@ -4,6 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,11 +18,8 @@ import id.nonime.app.adapter.HomeCompleteAdapter
 import id.nonime.app.adapter.HomeGenresAdapter
 import id.nonime.app.adapter.HomeOngoingAdapter
 import id.nonime.app.fragments.GenresBottomSheetFragment
-import id.nonime.app.models.AnimeItemModel
 import id.nonime.app.models.GenreModel
-import id.nonime.app.models.HomeModel
-import id.nonime.app.models.OnGoingAnimeModel
-import id.nonime.app.ui.detail.DetailAnime
+import id.nonime.app.ui.list.SearchResultActivity
 import id.nonime.app.view_model.GenreListViewModel
 import id.nonime.app.view_model.HomeViewModel
 
@@ -32,6 +32,22 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         supportActionBar?.hide()
+        var searchEdt: EditText = findViewById(R.id.etSearch)
+        searchEdt.setOnEditorActionListener { _, id, _ ->
+            if (id == EditorInfo.IME_ACTION_SEARCH) {
+                val text: String = searchEdt.text.toString().trim()
+                val intent = Intent(this, SearchResultActivity::class.java)
+                if (text.isNotEmpty()) {
+                    intent.putExtra("keyword", text)
+                    startActivity(intent)
+                    return@setOnEditorActionListener true
+                }else{
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(searchEdt.windowToken, 0)
+                }
+            }
+            return@setOnEditorActionListener false
+        }
         /**
          * genres
          */

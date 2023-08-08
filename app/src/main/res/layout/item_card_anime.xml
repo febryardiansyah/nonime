@@ -40,22 +40,25 @@
             android:layout_alignStart="@id/itemCardAnimeThumb"
             android:layout_alignEnd="@id/itemCardAnimeThumb"
             />
+
         <TextView
+            android:id="@+id/itemCardAnimeTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/itemCardAnimeTitle"
-            android:layout_alignParentBottom="true"
-            android:textSize="16sp"
-            android:text="PlaceHolder"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:ellipsize="end"
-            android:maxLines="1"
             android:layout_alignStart="@id/itemCardAnimeThumb"
             android:layout_alignEnd="@id/itemCardAnimeThumb"
-            android:layout_margin="8dp"
-            />
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/placeholder"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
